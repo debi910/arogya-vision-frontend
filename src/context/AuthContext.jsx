@@ -20,18 +20,12 @@ export function AuthProvider({ children }) {
       return
     }
 
-    try {
-      // 🔥 Token already verified by backend
-      setUser({ role })
-    } catch (err) {
-      console.error("Session restore failed", err)
-      localStorage.clear()
-      setUser(null)
-    } finally {
-      setLoading(false)
-    }
+    // token already verified by backend middleware
+    setUser({ role })
+    setLoading(false)
   }
 
+  // 🔥 SINGLE SOURCE OF LOGIN
   async function login(email, password) {
     const res = await api.post("/auth/login", { email, password })
 
@@ -39,8 +33,10 @@ export function AuthProvider({ children }) {
     localStorage.setItem("role", res.data.role)
 
     setUser({
-      role: res.data.role
+      role: res.data.role,
     })
+
+    return res.data.role
   }
 
   function logout() {
@@ -49,9 +45,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider
-      value={{ user, loading, login, logout }}
-    >
+    <AuthContext.Provider value={{ user, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   )
@@ -60,3 +54,4 @@ export function AuthProvider({ children }) {
 export function useAuth() {
   return useContext(AuthContext)
 }
+
