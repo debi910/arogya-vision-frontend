@@ -32,25 +32,24 @@ export function AuthProvider({ children }) {
     }
   }
 
-  async function login(email, password) {
-    const res = await api.post("/auth/login", { email, password })
-
-    localStorage.setItem("token", res.data.token)
-    localStorage.setItem("role", res.data.role)
+  async function login(data) {
+    localStorage.setItem("token", data.token)
+    localStorage.setItem("role", data.role)
 
     setUser({
-      role: res.data.role
+      role: data.role
     })
   }
 
   function logout() {
     localStorage.clear()
     setUser(null)
+    window.location.href = "/"
   }
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, login, logout }}
+      value={{ user, loading, login, logout, role: user?.role }}
     >
       {children}
     </AuthContext.Provider>

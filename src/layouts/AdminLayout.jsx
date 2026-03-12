@@ -1,6 +1,9 @@
 import { NavLink, Outlet } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 
 export default function AdminLayout() {
+  const { logout } = useAuth()
+
   return (
     <div className="flex min-h-screen bg-slate-100">
 
@@ -35,6 +38,15 @@ export default function AdminLayout() {
           <NavLink to="/admin/settings" className="nav-item">
             Settings
           </NavLink>
+
+          <div className="mt-8 pt-4 border-t">
+            <button
+              onClick={logout}
+              className="w-full text-left px-3 py-2 text-red-600 hover:bg-red-50 rounded text-sm"
+            >
+              Logout
+            </button>
+          </div>
         </nav>
       </aside>
 

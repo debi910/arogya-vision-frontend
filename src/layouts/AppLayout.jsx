@@ -2,7 +2,7 @@ import { NavLink, Outlet } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 
 export default function AppLayout() {
-  const { role, setRole } = useAuth()
+  const { role, logout } = useAuth()
 
   return (
     <div className="flex min-h-screen bg-slate-50">
@@ -30,20 +30,24 @@ export default function AppLayout() {
               <NavItem to="/appointments" label="Appointments" />
             </>
           )}
+
+          <div className="mt-8 pt-4 border-t">
+            <button
+              onClick={logout}
+              className="w-full text-left px-3 py-2 text-red-600 hover:bg-red-50 rounded text-sm"
+            >
+              Logout
+            </button>
+          </div>
         </nav>
       </aside>
 
       {/* Main Area */}
       <div className="flex-1 flex flex-col">
-        <header className="h-16 bg-white border-b flex justify-end items-center px-6">
-          <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            className="border rounded px-3 py-1 text-sm"
-          >
-            <option value="doctor">Doctor</option>
-            <option value="receptionist">Receptionist</option>
-          </select>
+        <header className="h-16 bg-white border-b flex justify-between items-center px-6">
+          <span className="text-sm text-slate-600 capitalize">
+            {role}
+          </span>
         </header>
 
         <main className="flex-1 p-8 overflow-y-auto">
