@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import api from "../services/api"
 import { useAuth } from "../context/AuthContext"
 
 export default function Login() {
@@ -18,14 +17,9 @@ export default function Login() {
     setError("")
 
     try {
-      const res = await api.post("/auth/login", {
-        email,
-        password,
-      })
+      const role = await login(email, password)
 
-      login(res.data)
-
-      if (res.data.role === "admin") {
+      if (role === "admin") {
         navigate("/admin", { replace: true })
       } else {
         navigate("/", { replace: true })
@@ -79,3 +73,4 @@ export default function Login() {
     </div>
   )
 }
+
