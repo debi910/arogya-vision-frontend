@@ -12,6 +12,10 @@ import AdminLayout from "./layouts/AdminLayout"
 import Dashboard from "./pages/Dashboard"
 import Appointments from "./pages/Appointments"
 import Consultation from "./pages/Consultation"
+import PatientHistory from "./pages/PatientHistory"
+import SearchPatients from "./pages/SearchPatients"
+import PrescriptionManagement from "./pages/PrescriptionManagement"
+import AppointmentStatus from "./pages/AppointmentStatus"
 
 // Admin (IMPORTANT: use ONLY admin folder)
 import AdminDashboard from "./pages/admin/AdminDashboard"
@@ -58,7 +62,11 @@ export default function App() {
       <Route path="/" element={<AppLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="appointments" element={<Appointments />} />
+        <Route path="appointments/status" element={<AppointmentStatus />} />
         <Route path="consultation" element={<Consultation />} />
+        <Route path="patients/search" element={<SearchPatients />} />
+        <Route path="patient/:patientId/history" element={<PatientHistory />} />
+        <Route path="prescriptions" element={<PrescriptionManagement />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" />} />
