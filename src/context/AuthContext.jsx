@@ -32,13 +32,20 @@ export function AuthProvider({ children }) {
     }
   }
 
-  async function login(data) {
-    localStorage.setItem("token", data.token)
-    localStorage.setItem("role", data.role)
+  async function login(email, password) {
+    // Make API call to backend
+    const res = await api.post("/auth/login", { email, password })
+    
+    const { token, role } = res.data
+    
+    localStorage.setItem("token", token)
+    localStorage.setItem("role", role)
 
     setUser({
-      role: data.role
+      role: role
     })
+    
+    return role
   }
 
   function logout() {
